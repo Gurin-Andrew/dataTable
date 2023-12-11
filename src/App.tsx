@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, Switch, ThemeProvider, CssBaseline, createTheme } from '@mui/material';
+import DataTable from './components/dataGrid';
+import { darkTheme, lightTheme } from './themes';
 
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ThemeProvider theme={createTheme(darkMode ? darkTheme : lightTheme)}>
+    <CssBaseline />
+    <div className=''>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Material-UI DataTable
+          </Typography>
+          <Typography variant="body2" sx={{ marginRight: 2 }}>
+            Dark Mode
+          </Typography>
+          <Switch checked={darkMode} onChange={toggleDarkMode} />
+        </Toolbar>
+      </AppBar>
+      <div className=''>
+        <DataTable darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      </div>
+    
     </div>
+    </ThemeProvider>
   );
 }
 
